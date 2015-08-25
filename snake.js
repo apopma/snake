@@ -1,6 +1,7 @@
 (function () {
   if (typeof SnakeGame === "undefined") {
     window.SnakeGame = {};
+    SnakeGame = {};
   }
 
   var Snake = SnakeGame.Snake = function () {
@@ -8,7 +9,7 @@
     this.segments = [[12, 12]];
   };
 
-  var Snake.DIRS = {
+  SnakeGame.DIRS = {
     "N": [0, -1],
     "E": [1, 0],
     "W": [0, 1],
@@ -19,8 +20,8 @@
     var lastHeadX = this.segments[this.segments.length[0]];
     var lastHeadY = this.segments[this.segments.length[1]];
 
-    var newHeadX = lastHeadX + Snake.DIRS[dir][0]
-    var newHeadY = lastHeadY + Snake.DIRS[dir][1]
+    var newHeadX = lastHeadX + SnakeGame.DIRS[dir][0]
+    var newHeadY = lastHeadY + SnakeGame.DIRS[dir][1]
     var newHead = [lastHeadX, lastHeadY];
 
     this.segments.unshift(newHead);
@@ -34,14 +35,16 @@
   var Board = SnakeGame.Board = function () {
     this.grid = Board.makeGrid();
     this.snake = new Snake();
+    this.WIDTH = 25;
+    this.HEIGHT = 25;
   };
 
   Board.makeGrid = function () {
     var grid = [];
 
-    for (var i = 0; i < 25; i++) {
+    for (var i = 0; i < Board.WIDTH; i++) {
       grid.push([]);
-      for (var j = 0; j < 25; j++) {
+      for (var j = 0; j < Board.HEIGHT; j++) {
         grid[i].push(".");
       }
     }
@@ -51,9 +54,11 @@
 
   Board.prototype.render = function () {
     var boardString = "";
+    debugger;
 
-    for (var row = 0; row < this.grid[0].length; row++) {
-      for (var col = 0; col < row.length; col++) {
+    for (var row = 0; row < this.HEIGHT; row++) {
+
+      for (var col = 0; col < this.WIDTH; col++) {
         var boardPos = [row, col];
         for (var seg = 0; seg < this.snake.segments.length; seg++) {
           if (this.hasSegmentAt(boardPos, this.snake.segments[seg])) {
