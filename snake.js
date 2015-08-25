@@ -6,7 +6,8 @@
 
   var Snake = SnakeGame.Snake = function () {
     this.dir = "N";
-    this.segments = [[12, 12]];
+    this.segments = [[0, 0], [0, 1], [0, 2]];
+    this.length = this.segments.length - 1;
   };
 
   SnakeGame.DIRS = {
@@ -17,11 +18,16 @@
   };
 
   Snake.prototype.move = function(dir) {
-    var lastHeadX = this.segments[this.segments.length[0]];
-    var lastHeadY = this.segments[this.segments.length[1]];
+    console.log(dir);
+    var lastSegment = this.segments.length - 1;
 
-    var newHeadX = lastHeadX + SnakeGame.DIRS[dir][0]
-    var newHeadY = lastHeadY + SnakeGame.DIRS[dir][1]
+    var lastHeadX = this.segments[lastSegment][0];
+    var lastHeadY = this.segments[lastSegment][1];
+    console.log(lastHeadX + " | " + lastHeadY);
+
+    var newHeadX = lastHeadX + SnakeGame.DIRS[dir][0];
+    var newHeadY = lastHeadY + SnakeGame.DIRS[dir][1];
+    console.log("NEW: " + newHeadX + " | " + newHeadY);
     var newHead = [lastHeadX, lastHeadY];
 
     this.segments.unshift(newHead);
@@ -30,7 +36,7 @@
 
   Snake.prototype.turn = function(newDir) {
     this.dir = newDir;
-  }
+  };
 
   var Board = SnakeGame.Board = function () {
     this.grid = Board.makeGrid();
@@ -54,25 +60,26 @@
 
   Board.prototype.render = function () {
     var boardString = "";
-    debugger;
+    var foundSegmentAtPos;
 
     for (var row = 0; row < this.HEIGHT; row++) {
-
       for (var col = 0; col < this.WIDTH; col++) {
         var boardPos = [row, col];
-        for (var seg = 0; seg < this.snake.segments.length; seg++) {
-          if (this.hasSegmentAt(boardPos, this.snake.segments[seg])) {
-            boardString += "s";
-          } else {
-            boardString += ".";
-          }
+
+        for (var seg = 0; seg <= this.snake.length; seg++) {
+          var snakePos = this.snake.segments[seg];
+          foundSegmentAtPos = this.hasSegmentAt(boardPos, snakePos);
+          if (foundSegmentAtPos) { break; }
         }
+
+        boardString += foundSegmentAtPos ? "s" : ".";
+        foundSegmentAtPos = null;
       }
 
       boardString += "\n";
     }
 
-    return boardString;
+    return "\n" + boardString + "\n";
   };
 
   Board.prototype.hasSegmentAt = function (boardPos, snakePos) {
