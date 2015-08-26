@@ -7,16 +7,19 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.3/jquery.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js'></script>
     <script type="text/javascript" src='./snake.js'></script>
+    <script type="text/javascript" src='./snake-view.js'></script>
 
 
   </head>
   <body>
     <h1>Snake!</h1>
 
-    <main id='snakegame'>
-      <script type="text/javascript">
-        var b = new SnakeGame.Board();
-      </script>
-    </main>
+    <pre id='snakegame'>
+
+    </pre>
+
+    <script type="text/javascript">
+      var view = new SnakeGame.View();
+    </script>
   </body>
 </html>

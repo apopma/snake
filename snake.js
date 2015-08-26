@@ -1,7 +1,6 @@
 (function () {
   if (typeof SnakeGame === "undefined") {
-    window.SnakeGame = {};
-    SnakeGame = {};
+    SnakeGame = window.SnakeGame = {};
   }
 
   SnakeGame.DIRS = {
@@ -18,7 +17,7 @@
 
   var Snake = SnakeGame.Snake = function () {
     this.dir = "N";
-    this.segments = [[24, 0], [23, 0], [22, 0]];
+    this.segments = [[14, 12], [13, 12], [12, 12]];
     this.length = this.segments.length - 1;
   };
 
