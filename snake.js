@@ -88,7 +88,7 @@
       boardString += "\n";
     }
 
-    return "\n" + boardString + "\n";
+    return boardString;
   };
 
   Board.prototype.hasSegmentAt = function (boardPos, snakePos) {
