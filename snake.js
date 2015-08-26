@@ -31,7 +31,6 @@
   // ---------------------------------------------------------------------------
 
   Snake.prototype.move = function() {
-    console.log(this.dir);
     var lastSegment = this.segments.length - 1;
 
     var lastHeadX = this.segments[lastSegment][0];
