@@ -1,0 +1,23 @@
+#snakegame {
+  border: 3px solid black;
+  border-radius: 10px;
+  display: inline-block;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.row {
+  display: inline-block;
+  float: left;
+  clear: left;
+  line-height: 0;
+}
+
+.cell {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border: 1px solid darkgray;
+}

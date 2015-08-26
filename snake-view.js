@@ -4,10 +4,11 @@
   }
 
   var View = SnakeGame.View = function() {
-    this.$el = $($.find("#snakegame"));
-    this.board = new SnakeGame.Board();
     this.KEY_CODES = SnakeGame.KEY_CODES;
 
+    this.$el = $($.find("#snakegame"));
+    this.board = new SnakeGame.Board();
+    this.makeHtml();
 
     window.setInterval(function() {
       this.step();
@@ -31,7 +32,7 @@
   };
 
   View.prototype.draw = function() {
-    this.$el.html(this.board.render());
+    // this.$el.html(this.board.render());
   };
 
   View.prototype.handleKeypress = function (event) {
@@ -40,5 +41,20 @@
     } else {
       // nothing whatever!
     }
+  };
+
+  View.prototype.makeHtml = function() {
+    var html = "";
+
+    for (var i = 0; i < this.board.HEIGHT; i++) {
+      html += "<div class='row'>";
+      for (var j = 0; j < this.board.WIDTH; j++) {
+        html += "<div class='cell'></div>";
+      }
+      html += "</div>";
+    }
+
+    this.$el.html(html);
+    this.$cells = this.$el.find(".cell");
   };
 })();
