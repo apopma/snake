@@ -4,53 +4,63 @@
     SnakeGame = {};
   }
 
+  SnakeGame.DIRS = {
+    "N": [-1, 0],
+    "E": [0, 1],
+    "W": [0, -1],
+    "S": [1, 0]
+  };
+
+  SnakeGame.BOARD = {
+    WIDTH: 25,
+    HEIGHT: 25
+  };
+
   var Snake = SnakeGame.Snake = function () {
     this.dir = "N";
-    this.segments = [[0, 0], [0, 1], [0, 2]];
+    this.segments = [[24, 0], [23, 0], [22, 0]];
     this.length = this.segments.length - 1;
   };
 
-  SnakeGame.DIRS = {
-    "N": [0, -1],
-    "E": [1, 0],
-    "W": [0, 1],
-    "S": [-1, 0]
+  var Board = SnakeGame.Board = function () {
+    this.WIDTH = SnakeGame.BOARD.WIDTH;
+    this.HEIGHT = SnakeGame.BOARD.HEIGHT;
+    this.grid = Board.makeGrid();
+    this.snake = new Snake();
   };
 
-  Snake.prototype.move = function(dir) {
-    console.log(dir);
+  // ---------------------------------------------------------------------------
+
+  Snake.prototype.move = function() {
+    console.log(this.dir);
     var lastSegment = this.segments.length - 1;
 
     var lastHeadX = this.segments[lastSegment][0];
     var lastHeadY = this.segments[lastSegment][1];
-    console.log(lastHeadX + " | " + lastHeadY);
 
-    var newHeadX = lastHeadX + SnakeGame.DIRS[dir][0];
-    var newHeadY = lastHeadY + SnakeGame.DIRS[dir][1];
-    console.log("NEW: " + newHeadX + " | " + newHeadY);
-    var newHead = [lastHeadX, lastHeadY];
+    var newHeadX = lastHeadX + SnakeGame.DIRS[this.dir][0];
+    var newHeadY = lastHeadY + SnakeGame.DIRS[this.dir][1];
+    var newHead = [newHeadX, newHeadY];
 
-    this.segments.unshift(newHead);
-    this.segments.pop();
+    this.segments.push(newHead);
+    this.segments.shift();
   };
 
   Snake.prototype.turn = function(newDir) {
     this.dir = newDir;
   };
 
-  var Board = SnakeGame.Board = function () {
-    this.grid = Board.makeGrid();
-    this.snake = new Snake();
-    this.WIDTH = 25;
-    this.HEIGHT = 25;
+  Snake.prototype.display = function() {
+    console.log(this.segments.join(" | "));
   };
+
+  // ---------------------------------------------------------------------------
 
   Board.makeGrid = function () {
     var grid = [];
-
-    for (var i = 0; i < Board.WIDTH; i++) {
+    for (var i = 0; i < SnakeGame.BOARD.HEIGHT; i++) {
       grid.push([]);
-      for (var j = 0; j < Board.HEIGHT; j++) {
+      for (var j = 0; j < SnakeGame.BOARD.WIDTH; j++) {
         grid[i].push(".");
       }
     }
