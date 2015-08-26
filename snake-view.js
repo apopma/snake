@@ -6,12 +6,21 @@
   var View = SnakeGame.View = function() {
     this.$el = $($.find("#snakegame"));
     this.board = new SnakeGame.Board();
+    this.KEY_CODES = SnakeGame.KEY_CODES;
+
 
     window.setInterval(function() {
       this.step();
     }.bind(this), 500);
 
     $(window).on("keydown", this.handleKeypress.bind(this));
+  };
+
+  SnakeGame.KEY_CODES = {
+    38: "N",
+    37: "W",
+    39: "E",
+    40: "S"
   };
 
   // ---------------------------------------------------------------------------
@@ -26,28 +35,10 @@
   };
 
   View.prototype.handleKeypress = function (event) {
-    var keyCode = event.which;
-    // N: 38, W: 39, S: 40, E: 37
-    // P: 80, Space: 32, Enter: 13
-
-    switch(keyCode) {
-      case 37:
-        this.board.snake.turn("W");
-        break;
-      case 38:
-        this.board.snake.turn("N");
-        break;
-      case 39:
-        this.board.snake.turn("E");
-        break;
-      case 40:
-        this.board.snake.turn("S");
-        break;
-      case 80:
-        debugger;
-        break;
-      default:
-        console.log(keyCode);
+    if (this.KEY_CODES[event.keyCode]) {
+      this.board.snake.turn(this.KEY_CODES[event.keyCode]);
+    } else {
+      // nothing whatever!
     }
   };
 })();
