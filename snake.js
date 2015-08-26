@@ -16,8 +16,8 @@
   };
 
   var Snake = SnakeGame.Snake = function () {
-    this.dir = "N";
-    this.segments = [[14, 12], [13, 12], [12, 12]];
+    this.dir = "E";
+    this.segments = [[1, 0], [1, 1], [1, 2]];
     this.length = this.segments.length - 1;
   };
 

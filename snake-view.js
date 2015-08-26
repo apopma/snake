@@ -33,6 +33,18 @@
 
   View.prototype.draw = function() {
     // this.$el.html(this.board.render());
+
+    this.colorCells(this.board.snake.segments, "snake");
+  };
+
+  View.prototype.colorCells = function(coords, className) {
+    this.$cells.filter("." + className).removeClass(className);
+
+    _.each(coords, function(coord) {
+      // Find the (flattened) index of this cell, then color it.
+      var ord = (coord[0] * this.board.HEIGHT) + coord[1];
+      this.$cells.eq(ord).addClass(className);
+    }.bind(this));
   };
 
   View.prototype.handleKeypress = function (event) {

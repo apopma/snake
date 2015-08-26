@@ -21,3 +21,7 @@
   background-color: white;
   border: 1px solid darkgray;
 }
+
+.cell.snake {
+  background-color: red;
+}
