@@ -10,7 +10,7 @@
     this.board = new SnakeGame.Board();
     this.makeHtml();
 
-    window.setInterval(function() {
+    this.timer = window.setInterval(function() {
       this.step();
     }.bind(this), 500);
 
@@ -21,14 +21,14 @@
     38: "N",
     37: "W",
     39: "E",
-    40: "S"
+    40: "S",
   };
 
   // ---------------------------------------------------------------------------
 
   View.prototype.step = function() {
-    this.board.snake.move();
-    this.draw();
+    var validMove = this.board.snake.move();
+    validMove ? this.draw() : this.gameover();
   };
 
   View.prototype.draw = function() {
@@ -48,6 +48,8 @@
   };
 
   View.prototype.handleKeypress = function (event) {
+    if (event.keyCode === 80) { debugger; }  // P
+
     if (this.KEY_CODES[event.keyCode]) {
       this.board.snake.turn(this.KEY_CODES[event.keyCode]);
     } else {
@@ -68,5 +70,12 @@
 
     this.$el.html(html);
     this.$cells = this.$el.find(".cell");
+  };
+
+  View.prototype.gameover = function() {
+    this.$cells.filter(".snake").addClass("dead");
+    alert("Game over!");
+    window.clearInterval(this.timer);
+    $(window).off();
   };
 })();

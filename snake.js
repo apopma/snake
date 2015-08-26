@@ -16,8 +16,8 @@
   };
 
   var Snake = SnakeGame.Snake = function () {
-    this.dir = "E";
-    this.segments = [[1, 0], [1, 1], [1, 2]];
+    this.dir = "N";
+    this.segments = [[21, 12], [20, 12], [19, 12], [18, 12], [17, 12]];
     this.length = this.segments.length - 1;
   };
 
@@ -40,8 +40,11 @@
     var newHeadY = lastHeadY + SnakeGame.DIRS[this.dir][1];
     var newHead = [newHeadX, newHeadY];
 
+    if (this.moveOffBoard(newHead) || this.moveIntoSelf(newHead)) { return false; }
+
     this.segments.push(newHead);
     this.segments.shift();
+    return true;
   };
 
   Snake.prototype.turn = function(newDir) {
@@ -50,6 +53,22 @@
 
   Snake.prototype.display = function() {
     console.log(this.segments.join(" | "));
+  };
+
+  Snake.prototype.moveOffBoard = function(head) {
+    // True if any of the head's coords are <0, >HEIGHT, or >WIDTH.
+    return _.some(head, function(coord) {
+      return (coord < 0 ||
+      coord >= SnakeGame.BOARD.WIDTH ||
+      coord >= SnakeGame.BOARD.HEIGHT);
+    });
+  };
+
+  Snake.prototype.moveIntoSelf = function(head) {
+    // True if the head's coords match any of the segments.
+    return _.some(this.segments, function(segment) {
+      return Board.prototype.hasSegmentAt(segment, head);
+    }.bind(this));
   };
 
   // ---------------------------------------------------------------------------
@@ -91,10 +110,6 @@
   };
 
   Board.prototype.hasSegmentAt = function (boardPos, snakePos) {
-    if (boardPos[0] === snakePos[0] && boardPos[1] === snakePos[1]) {
-      return true;
-    } else {
-      return false;
-    }
+    return (boardPos[0] === snakePos[0] && boardPos[1] === snakePos[1]);
   };
 })();

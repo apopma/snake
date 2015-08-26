@@ -25,3 +25,7 @@
 .cell.snake {
   background-color: red;
 }
+
+.snake.dead {
+  background-color: darkred;
+}
