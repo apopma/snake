@@ -35,6 +35,7 @@
     // this.$el.html(this.board.render());
 
     this.colorCells(this.board.snake.segments, "snake");
+    this.colorCells([this.board.apple.pos], "apple")
   };
 
   View.prototype.colorCells = function(coords, className) {
@@ -42,7 +43,7 @@
 
     _.each(coords, function(coord) {
       // Find the (flattened) index of this cell, then color it.
-      var ord = (coord[0] * this.board.HEIGHT) + coord[1];
+      var ord = (coord.x * this.board.HEIGHT) + coord.y;
       this.$cells.eq(ord).addClass(className);
     }.bind(this));
   };
@@ -73,7 +74,7 @@
   };
 
   View.prototype.gameover = function() {
-    this.$cells.filter(".snake").addClass("dead");
+    this.$cells.filter(".snake").addClass("dead").removeClass("snake");
     alert("Game over!");
     window.clearInterval(this.timer);
     $(window).off();

@@ -23,9 +23,13 @@
 }
 
 .cell.snake {
+  background-color: green;
+}
+
+.cell.apple {
   background-color: red;
 }
 
-.snake.dead {
-  background-color: darkred;
+.cell.dead {
+  background-color: #254117;
 }
