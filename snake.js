@@ -43,8 +43,7 @@
   var Apple = SnakeGame.Apple = function (board) {
     this.symbol = SnakeGame.SYMBOLS.APPLE;
     this.board = board;
-    this.pos = new Pos(5, 5);
-    // this.place();
+    this.place();
   };
 
   SnakeGame.DIRS = {
@@ -102,6 +101,12 @@
     }.bind(this));
   };
 
+  Snake.prototype.at = function (pos) {
+    return _.some(this.segments, function(segment) {
+      return pos.eql(segment);
+    });
+  };
+
   // ---------------------------------------------------------------------------
 
   Board.makeGrid = function () {
@@ -129,6 +134,22 @@
     grid.map(function (row) {
       return row.join("");
     }).join("\n");
+  };
+
+  // ---------------------------------------------------------------------------
+
+  Apple.prototype.place = function() {
+    var x = Math.floor(Math.random() * this.board.WIDTH);
+    var y = Math.floor(Math.random() * this.board.HEIGHT);
+
+    var pos = new Pos(x, y);
+    while (this.board.snake.at(pos)) {
+      x = Math.floor(Math.random() * this.board.WIDTH);
+      y = Math.floor(Math.random() * this.board.HEIGHT);
+      pos = new Pos(x, y);
+    }
+
+    this.pos = pos;
   };
 
 })();
