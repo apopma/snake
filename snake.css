@@ -6,6 +6,14 @@
   overflow: hidden;
 }
 
+.newgame {
+  display: none;
+}
+
+/*.newgame.active {
+  display: block;
+}*/
+
 .row {
   display: inline-block;
   float: left;

@@ -7,6 +7,7 @@
     this.KEY_CODES = SnakeGame.KEY_CODES;
 
     this.$el = $($.find("#snakegame"));
+    this.$gameboard = this.$el.find("#board");
     this.board = new SnakeGame.Board();
     this.makeHtml();
 
@@ -69,8 +70,8 @@
       html += "</div>";
     }
 
-    this.$el.html(html);
-    this.$cells = this.$el.find(".cell");
+    this.$gameboard.html(html);
+    this.$cells = this.$gameboard.find(".cell");
   };
 
   View.prototype.gameover = function() {
