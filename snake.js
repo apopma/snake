@@ -29,7 +29,8 @@
                     );
     this.segments = [center];
     this.length = this.segments.length - 1;
-    this.head = function() { return this.segments[this.length]; };
+    this.growing = 0;
+    this.head = function() { return this.segments[this.segments.length - 1]; };
   };
 
   var Board = SnakeGame.Board = function () {
@@ -76,12 +77,23 @@
     if (this.moveOffBoard(newHead) || this.moveIntoSelf(newHead)) { return false; }
 
     this.segments.push(newHead);
-    this.segments.shift();
+    if (this.growing > 0) { this.growing--; }
+    if (this.isApplePos(newHead)) { this.eat(); }
+    if (!this.growing) { this.segments.shift(); }
     return true;
   };
 
   Snake.prototype.turn = function(newDir) {
     this.dir = newDir;
+  };
+
+  Snake.prototype.eat = function() {
+    this.growing += 3;
+    this.board.apple.place();
+  };
+
+  Snake.prototype.isApplePos = function (head) {
+    return this.board.apple.pos.eql(head);
   };
 
   Snake.prototype.moveOffBoard = function(head) {
@@ -129,7 +141,7 @@
       grid[segment.x][segment.y] = this.snake.symbol;
     }.bind(this));
 
-    grid[this.apple.pos.x][this.apply.pos.y] = this.apple.symbol;
+    grid[this.apple.pos.x][this.apple.pos.y] = this.apple.symbol;
 
     grid.map(function (row) {
       return row.join("");
