@@ -10,8 +10,8 @@
     this.$gameboard = this.$el.find("#board");
     this.board = new SnakeGame.Board();
     this.makeHtml();
-    
-    $(".newgame").on("click difficulty", this.start.bind(this));
+
+    $(".newgame").on("click", ".difficulty", this.start.bind(this));
   };
 
   SnakeGame.KEY_CODES = {

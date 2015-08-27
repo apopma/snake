@@ -4,6 +4,7 @@
   display: inline-block;
   box-sizing: border-box;
   overflow: hidden;
+  position: relative;
 }
 
 .newgame {
@@ -12,6 +13,20 @@
 
 .newgame.active {
   display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  text-align: center;
+  background-color: rgba(70, 70, 70, 0.4);
+}
+
+.newgame .info {
+  background-color: rgba(220, 220, 220, 0.8);
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 40%;
+  transform: translateX(50%);
+  width: 45%;
 }
 
 .row {
