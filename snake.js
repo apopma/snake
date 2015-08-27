@@ -3,43 +3,77 @@
     SnakeGame = window.SnakeGame = {};
   }
 
-  SnakeGame.DIRS = {
-    "N": [-1, 0],
-    "E": [0, 1],
-    "W": [0, -1],
-    "S": [1, 0]
-  };
-
   SnakeGame.BOARD = {
     WIDTH: 25,
     HEIGHT: 25
   };
 
-  var Snake = SnakeGame.Snake = function () {
+  SnakeGame.SYMBOLS = {
+    BLANK: ".",
+    SNAKE: "s",
+    APPLE: "a"
+  };
+
+  var Pos = SnakeGame.Pos = function(x, y) {
+    this.x = x;
+    this.y = y;
+  };
+
+  var Snake = SnakeGame.Snake = function (board) {
+    this.board = board;
+    this.symbol = SnakeGame.SYMBOLS.SNAKE;
     this.dir = "N";
-    this.segments = [[21, 12], [20, 12], [19, 12], [18, 12], [17, 12]];
+    var center = new Pos(
+                      Math.floor(SnakeGame.BOARD.WIDTH/2),
+                      Math.floor(SnakeGame.BOARD.HEIGHT/2)
+                    );
+    this.segments = [center];
     this.length = this.segments.length - 1;
+    this.head = function() { return this.segments[this.length]; };
   };
 
   var Board = SnakeGame.Board = function () {
+    this.symbol = SnakeGame.SYMBOLS.BLANK;
     this.WIDTH = SnakeGame.BOARD.WIDTH;
     this.HEIGHT = SnakeGame.BOARD.HEIGHT;
-    this.grid = Board.makeGrid();
-    this.snake = new Snake();
+    this.snake = new Snake(this);
+    this.apple = new Apple(this);
+  };
+
+  var Apple = SnakeGame.Apple = function (board) {
+    this.symbol = SnakeGame.SYMBOLS.APPLE;
+    this.board = board;
+    this.pos = new Pos(5, 5);
+    // this.place();
+  };
+
+  SnakeGame.DIRS = {
+    "N": new Pos(-1, 0),
+    "E": new Pos(0, 1),
+    "W": new Pos(0, -1),
+    "S": new Pos(1, 0)
   };
 
   // ---------------------------------------------------------------------------
 
+    Pos.prototype.plus = function (pos2) {
+      var newX = this.x + pos2.x;
+      var newY = this.y + pos2.y;
+      return new Pos(newX, newY);
+    };
+
+    Pos.prototype.eql = function (pos2) {
+      return ((this.x === pos2.x) && (this.y === pos2.y));
+    };
+
+    Pos.prototype.isOppositeOf = function (pos2) {
+      return ((this.x === (-1 * pos2.x)) && (this.y === (-1 * pos2.y)));
+    };
+
+  // ---------------------------------------------------------------------------
+
   Snake.prototype.move = function() {
-    var lastSegment = this.segments.length - 1;
-
-    var lastHeadX = this.segments[lastSegment][0];
-    var lastHeadY = this.segments[lastSegment][1];
-
-    var newHeadX = lastHeadX + SnakeGame.DIRS[this.dir][0];
-    var newHeadY = lastHeadY + SnakeGame.DIRS[this.dir][1];
-    var newHead = [newHeadX, newHeadY];
-
+    var newHead = this.head().plus(SnakeGame.DIRS[this.dir]);
     if (this.moveOffBoard(newHead) || this.moveIntoSelf(newHead)) { return false; }
 
     this.segments.push(newHead);
@@ -51,13 +85,10 @@
     this.dir = newDir;
   };
 
-  Snake.prototype.display = function() {
-    console.log(this.segments.join(" | "));
-  };
-
   Snake.prototype.moveOffBoard = function(head) {
     // True if any of the head's coords are <0, >HEIGHT, or >WIDTH.
-    return _.some(head, function(coord) {
+    var coords = [head.x, head.y];
+    return _.some(coords, function(coord) {
       return (coord < 0 ||
       coord >= SnakeGame.BOARD.WIDTH ||
       coord >= SnakeGame.BOARD.HEIGHT);
@@ -67,7 +98,7 @@
   Snake.prototype.moveIntoSelf = function(head) {
     // True if the head's coords match any of the segments.
     return _.some(this.segments, function(segment) {
-      return Board.prototype.hasSegmentAt(segment, head);
+      return head.eql(segment);
     }.bind(this));
   };
 
@@ -78,7 +109,7 @@
     for (var i = 0; i < SnakeGame.BOARD.HEIGHT; i++) {
       grid.push([]);
       for (var j = 0; j < SnakeGame.BOARD.WIDTH; j++) {
-        grid[i].push(".");
+        grid[i].push(SnakeGame.SYMBOLS.BLANK);
       }
     }
 
@@ -87,29 +118,17 @@
 
   Board.prototype.render = function () {
     var boardString = "";
-    var foundSegmentAtPos;
+    var grid = Board.makeGrid();
 
-    for (var row = 0; row < this.HEIGHT; row++) {
-      for (var col = 0; col < this.WIDTH; col++) {
-        var boardPos = [row, col];
+    _.each(this.snake.segments, function(segment) {
+      grid[segment.x][segment.y] = this.snake.symbol;
+    }.bind(this));
 
-        for (var seg = 0; seg <= this.snake.length; seg++) {
-          var snakePos = this.snake.segments[seg];
-          foundSegmentAtPos = this.hasSegmentAt(boardPos, snakePos);
-          if (foundSegmentAtPos) { break; }
-        }
+    grid[this.apple.pos.x][this.apply.pos.y] = this.apple.symbol;
 
-        boardString += foundSegmentAtPos ? "s" : ".";
-        foundSegmentAtPos = null;
-      }
-
-      boardString += "\n";
-    }
-
-    return boardString;
+    grid.map(function (row) {
+      return row.join("");
+    }).join("\n");
   };
 
-  Board.prototype.hasSegmentAt = function (boardPos, snakePos) {
-    return (boardPos[0] === snakePos[0] && boardPos[1] === snakePos[1]);
-  };
 })();
