@@ -30,6 +30,7 @@
     this.segments = [center];
     this.length = this.segments.length - 1;
     this.growing = 0;
+    this.turning = null;
     this.head = function() { return this.segments[this.segments.length - 1]; };
   };
 
@@ -77,14 +78,22 @@
     if (this.moveOffBoard(newHead) || this.moveIntoSelf(newHead)) { return false; }
 
     this.segments.push(newHead);
-    if (this.growing > 0) { this.growing--; }
+    this.turning = false;
+    if (this.growing > 0)         { this.growing--; }
     if (this.isApplePos(newHead)) { this.eat(); }
-    if (!this.growing) { this.segments.shift(); }
+    if (!this.growing)            { this.segments.shift(); }
     return true;
   };
 
   Snake.prototype.turn = function(newDir) {
-    this.dir = newDir;
+    var isUTurn = SnakeGame.DIRS[newDir].isOppositeOf(SnakeGame.DIRS[this.dir]);
+    if (this.turning || isUTurn) {
+      // don't allow turns into yourself or turning in-between moves
+      return;
+    } else {
+      this.turning = true;
+      this.dir = newDir;
+    }
   };
 
   Snake.prototype.eat = function() {
