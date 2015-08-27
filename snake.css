@@ -10,9 +10,9 @@
   display: none;
 }
 
-/*.newgame.active {
+.newgame.active {
   display: block;
-}*/
+}
 
 .row {
   display: inline-block;

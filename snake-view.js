@@ -10,12 +10,8 @@
     this.$gameboard = this.$el.find("#board");
     this.board = new SnakeGame.Board();
     this.makeHtml();
-
-    this.timer = window.setInterval(function() {
-      this.step();
-    }.bind(this), 500);
-
-    $(window).on("keydown", this.handleKeypress.bind(this));
+    
+    $(".newgame").on("click difficulty", this.start.bind(this));
   };
 
   SnakeGame.KEY_CODES = {
@@ -23,6 +19,17 @@
     37: "W",
     39: "E",
     40: "S",
+  };
+
+  View.prototype.start = function (event) {
+    var speed = $(event.target).data("speed");
+    this.$el.find(".newgame").removeClass("active");
+
+    this.timer = window.setInterval(function() {
+      this.step();
+    }.bind(this), speed);
+
+    $(window).on("keydown", this.handleKeypress.bind(this));
   };
 
   // ---------------------------------------------------------------------------
