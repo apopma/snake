@@ -34,12 +34,29 @@
     this.head = function() { return this.segments[this.segments.length - 1]; };
   };
 
-  var Board = SnakeGame.Board = function () {
+  var Board = SnakeGame.Board = function (speed) {
     this.symbol = SnakeGame.SYMBOLS.BLANK;
     this.WIDTH = SnakeGame.BOARD.WIDTH;
     this.HEIGHT = SnakeGame.BOARD.HEIGHT;
     this.snake = new Snake(this);
     this.apple = new Apple(this);
+
+    switch(speed) {
+      case 500:
+        this.pointsPerApple = 10;
+        break;
+      case 250:
+        this.pointsPerApple = 20;
+        break;
+      case 93:
+        this.pointsPerApple = 30;
+        break;
+      default:
+        this.pointsPerApple = 10;
+        break;
+    }
+
+    this.score = 0;
   };
 
   var Apple = SnakeGame.Apple = function (board) {
@@ -98,6 +115,7 @@
 
   Snake.prototype.eat = function() {
     this.growing += 3;
+    this.board.score += this.board.pointsPerApple;
     this.board.apple.place();
   };
 

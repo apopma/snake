@@ -8,7 +8,6 @@
 
     this.$el = $($.find("#snakegame"));
     this.$gameboard = this.$el.find("#board");
-    this.board = new SnakeGame.Board();
     this.makeHtml();
 
     $(".newgame").on("click", ".difficulty", this.start.bind(this));
@@ -24,11 +23,13 @@
   View.prototype.start = function (event) {
     var speed = $(event.target).data("speed");
     this.$el.find(".newgame").removeClass("active");
+    this.board = new SnakeGame.Board(speed);
 
     this.timer = window.setInterval(function() {
       this.step();
     }.bind(this), speed);
 
+    $(".newgame").off();
     $(window).on("keydown", this.handleKeypress.bind(this));
   };
 
@@ -69,9 +70,9 @@
   View.prototype.makeHtml = function() {
     var html = "";
 
-    for (var i = 0; i < this.board.HEIGHT; i++) {
+    for (var i = 0; i < SnakeGame.BOARD.HEIGHT; i++) {
       html += "<div class='row'>";
-      for (var j = 0; j < this.board.WIDTH; j++) {
+      for (var j = 0; j < SnakeGame.BOARD.WIDTH; j++) {
         html += "<div class='cell'></div>";
       }
       html += "</div>";
@@ -83,7 +84,7 @@
 
   View.prototype.gameover = function() {
     this.$cells.filter(".snake").addClass("dead").removeClass("snake");
-    alert("Game over!");
+    alert("Game over! Your score was " + this.board.score + ".");
     window.clearInterval(this.timer);
     $(window).off();
   };
