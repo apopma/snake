@@ -32,15 +32,11 @@
   width: 45%;
 }
 
-/*.gameover.active {
-  display: block;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 100%;
-  text-align: center;
-  background-color: rgba(70, 70, 70, 0.4);
-}*/
+.gameover .info {
+  margin-top: 16%;
+  transform: translateX(34.7%);
+  width: 55%;
+}
 
 .row {
   display: inline-block;
