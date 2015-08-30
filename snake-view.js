@@ -10,7 +10,7 @@
     this.$gameboard = this.$el.find("#board");
     this.makeHtml();
 
-    $(".newgame").on("click", ".difficulty", this.start.bind(this));
+    this.newGameHandler = $(".newgame").on("click", ".difficulty", this.start.bind(this));
   };
 
   SnakeGame.KEY_CODES = {
@@ -29,8 +29,8 @@
       this.step();
     }.bind(this), speed);
 
-    $(".newgame").off();
-    $(window).on("keydown", this.handleKeypress.bind(this));
+    this.newGameHandler.off();
+    this.keyHandler = $(window).on("keydown", this.handleKeypress.bind(this));
   };
 
   // ---------------------------------------------------------------------------
@@ -41,10 +41,12 @@
   };
 
   View.prototype.draw = function() {
-    // this.$el.html(this.board.render());
-
     this.colorCells(this.board.snake.segments, "snake");
-    this.colorCells([this.board.apple.pos], "apple")
+    this.colorCells([this.board.apple.pos], "apple");
+  };
+
+  View.prototype.wipe = function() {
+    this.$cells.removeClass("dead").removeClass("apple");
   };
 
   View.prototype.colorCells = function(coords, className) {
@@ -61,6 +63,7 @@
     if (event.keyCode === 80) { debugger; }  // P
 
     if (this.KEY_CODES[event.keyCode]) {
+      event.preventDefault();
       this.board.snake.turn(this.KEY_CODES[event.keyCode]);
     } else {
       // nothing whatever!
@@ -84,8 +87,22 @@
 
   View.prototype.gameover = function() {
     this.$cells.filter(".snake").addClass("dead").removeClass("snake");
-    alert("Game over! Your score was " + this.board.score + ".");
+    var $overlay = this.$el.find(".gameover").addClass("active");
+    $overlay.find(".player-score").html(this.board.score);
+
     window.clearInterval(this.timer);
-    $(window).off();
+    this.keyHandler.off();
+    this.restartHandler = $(document).keydown(this.restart.bind(this));
+  };
+
+  View.prototype.restart = function(event) {
+    if (event.keyCode !== 32) { return; } // ignore everything but Space
+    this.restartHandler.off();
+
+    this.wipe(); // just for rendering purposes; start() makes a new Board
+
+    this.$el.find(".gameover").removeClass("active");
+    this.$el.find(".newgame").addClass("active");
+    this.newGameHandler = $(".newgame").on("click", ".difficulty", this.start.bind(this));
   };
 })();

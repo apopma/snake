@@ -160,7 +160,7 @@
     return grid;
   };
 
-  Board.prototype.render = function () {
+  Board.prototype.render = function() {
     var boardString = "";
     var grid = Board.makeGrid();
 

@@ -7,20 +7,23 @@
   position: relative;
 }
 
-.newgame {
+.newgame, .gameover {
   display: none;
 }
 
-.newgame.active {
+.newgame.active,
+.gameover.active {
   display: block;
   position: absolute;
   top: 0;
   bottom: 0;
+  width: 100%;
   text-align: center;
   background-color: rgba(70, 70, 70, 0.4);
 }
 
-.newgame .info {
+.newgame .info,
+.gameover .info {
   background-color: rgba(220, 220, 220, 0.8);
   border-radius: 10px;
   padding: 10px;
@@ -28,6 +31,16 @@
   transform: translateX(50%);
   width: 45%;
 }
+
+/*.gameover.active {
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  background-color: rgba(70, 70, 70, 0.4);
+}*/
 
 .row {
   display: inline-block;
