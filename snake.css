@@ -7,7 +7,9 @@
   position: relative;
 }
 
-.newgame, .gameover, .highscore-entry, .highscores {
+.newgame, .gameover,
+.highscore-entry, .highscores,
+.current-score {
   display: none;
 }
 
@@ -22,6 +24,7 @@
   background-color: rgba(70, 70, 70, 0.4);
 }
 
+.current-score.active,
 .highscores.active,
 .highscore-entry.active {
   display: block;

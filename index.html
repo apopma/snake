@@ -14,91 +14,97 @@
   <body>
     <h1>Snake!</h1>
 
-    <main id='snakegame'>
-      <section class='newgame active'>
-        <div class="info">
-          It's Snake! Use the arrow keys to move around. Choose a difficulty:
-          <button class="difficulty" data-speed="500">
-            Stumble
-          </button>
+    <div>
+      <main id='snakegame'>
+        <section class='newgame active'>
+          <div class="info">
+            It's Snake! Use the arrow keys to move around. Choose a difficulty:
+            <button class="difficulty" data-speed="500">
+              Stumble
+            </button>
 
-          <button class="difficulty" data-speed="250">
-            Slither
-          </button>
+            <button class="difficulty" data-speed="250">
+              Slither
+            </button>
 
-          <button class="difficulty" data-speed="93">
-            Sprint
-          </button>
-        </div>
-      </section>
+            <button class="difficulty" data-speed="93">
+              Sprint
+            </button>
+          </div>
+        </section>
 
-      <section class='gameover'>
-        <div class="info">
-          Sadly, you've been slain. <br>
-          Your score was <span class='player-score'></span>. <br>
+        <section class='gameover'>
+          <div class="info">
+            Sadly, you've been slain. <br>
+            Your score was <span class='player-score'></span>. <br>
 
-          <div class="highscore-entry">
-            <br>
-            Stellar! Your score was super! <br>
-            Scribe your sobriquet below:
-            <aside>
-              <input type="text" class="sobriquet">
-              <button class='highscore-submit'>Submit</button>
+            <div class="highscore-entry">
+              <br>
+              Stellar! Your score was super! <br>
+              Scribe your sobriquet below:
+              <aside>
+                <input type="text" class="sobriquet">
+                <button class='highscore-submit'>Submit</button>
+              </aside>
+            </div>
+
+            <aside class='highscores'>
+              <hr>
+              High Scores:
+              <ol>
+                <li>
+                  <span class='sobriquet'>Ialdabaoth</span>:
+                  <span class='score'>13650</span></li>
+                <li>
+                  <span class='sobriquet'>Abraxas</span>:
+                  <span class='score'>9990</span>
+                </li>
+                <li>
+                  <span class='sobriquet'>Python</span>:
+                  <span class='score'>5120</span>
+                </li>
+                <li>
+                  <span class='sobriquet'>Vi Hart</span>:
+                  <span class='score'>3630</span>
+                </li>
+                <li>
+                  <span class='sobriquet'>King Cobra</span>:
+                  <span class='score'>2560</span>
+                </li>
+                <li>
+                  <span class='sobriquet'>Boa Constrictor</span>:
+                  <span class='score'>870</span>
+                </li>
+                <li>
+                  <span class='sobriquet'>Inland Taipan</span>:
+                  <span class='score'>510</span>
+                </li>
+                <li>
+                  <span class='sobriquet'>California Kingsnake</span>:
+                  <span class='score'>450</span>
+                </li>
+                <li>
+                  <span class='sobriquet'>Corn Snake</span>:
+                  <span class='score'>240</span>
+                </li>
+                <li>
+                  <span class='sobriquet'>Garter Snake</span>:
+                  <span class='score'>130</span>
+                </li>
+              </ol>
+
+              Strike the spacebar if you'd like to play again.
             </aside>
           </div>
+        </section>
 
-          <aside class='highscores'>
-            <hr>
-            High Scores:
-            <ol>
-              <li>
-                <span class='sobriquet'>Ialdabaoth</span>:
-                <span class='score'>13650</span></li>
-              <li>
-                <span class='sobriquet'>Abraxas</span>:
-                <span class='score'>9990</span>
-              </li>
-              <li>
-                <span class='sobriquet'>Python</span>:
-                <span class='score'>5120</span>
-              </li>
-              <li>
-                <span class='sobriquet'>Vi Hart</span>:
-                <span class='score'>3630</span>
-              </li>
-              <li>
-                <span class='sobriquet'>King Cobra</span>:
-                <span class='score'>2560</span>
-              </li>
-              <li>
-                <span class='sobriquet'>Boa Constrictor</span>:
-                <span class='score'>870</span>
-              </li>
-              <li>
-                <span class='sobriquet'>Inland Taipan</span>:
-                <span class='score'>510</span>
-              </li>
-              <li>
-                <span class='sobriquet'>California Kingsnake</span>:
-                <span class='score'>450</span>
-              </li>
-              <li>
-                <span class='sobriquet'>Corn Snake</span>:
-                <span class='score'>240</span>
-              </li>
-              <li>
-                <span class='sobriquet'>Garter Snake</span>:
-                <span class='score'>20</span>
-              </li>
-            </ol>
+        <section id='board'></section>
+      </main>
 
-            Strike the spacebar if you'd like to play again.
-          </aside>
-        </div>
-      </section>
-
-      <section id='board'></section>
-    </main>
+      <aside class="current-score">
+        Score: <span></span>
+      </aside>
+    </div>
 
     <script type="text/javascript">
       $(function () {

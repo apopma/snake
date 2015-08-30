@@ -23,6 +23,7 @@
   View.prototype.start = function (event) {
     var speed = $(event.target).data("speed");
     this.$el.find(".newgame").removeClass("active");
+    $(".current-score").addClass("active");
     this.board = new SnakeGame.Board(speed);
 
     this.timer = window.setInterval(function() {
@@ -43,6 +44,7 @@
   View.prototype.draw = function() {
     this.colorCells(this.board.snake.segments, "snake");
     this.colorCells([this.board.apple.pos], "apple");
+    $(".current-score span").html(this.board.score);
   };
 
   View.prototype.wipe = function() {
@@ -87,6 +89,7 @@
 
   View.prototype.gameover = function() {
     this.$cells.filter(".snake").addClass("dead").removeClass("snake");
+    $(".current-score").removeClass("active");
     var $overlay = this.$el.find(".gameover").addClass("active");
     $overlay.find(".player-score").html(this.board.score);
 
@@ -139,6 +142,7 @@
   View.prototype.restart = function(event) {
     if (event.keyCode === 32) {
       this.restartHandler.off();
+      $(".current-score span").html(0);
       this.wipe(); // just for rendering purposes; start() makes a new Board
 
       this.$el.find(".highscores li.strong").removeClass("strong");
