@@ -22,6 +22,7 @@
   background-color: rgba(70, 70, 70, 0.4);
 }
 
+.highscores.active,
 .highscore-entry.active {
   display: block;
 }

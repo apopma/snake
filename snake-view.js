@@ -91,40 +91,60 @@
     $overlay.find(".player-score").html(this.board.score);
 
     var worstHighScore = parseInt($overlay.find(".score").last().html());
-    if (this.board.score > worstHighScore) { this.enterNewHighScore(); }
+    if (this.board.score > worstHighScore) {
+      this.enterNewHighScore();
+    } else {
+      this.displayHighScores();
+    }
 
     window.clearInterval(this.timer);
     this.keyHandler.off();
+  };
+
+  View.prototype.displayHighScores = function() {
+    this.$el.find(".highscores").addClass("active");
     this.restartHandler = $(document).keydown(this.restart.bind(this));
   };
 
   View.prototype.enterNewHighScore = function() {
     this.$el.find(".highscore-entry").addClass("active");
     this.highscoreHandler = $(".highscore-entry").on(
-      "click", ".highscore-submit", this.updateHighscores.bind(this)
+      "click", ".highscore-submit", this.updateHighScores.bind(this)
     );
   };
 
-  View.prototype.updateHighscores = function(event) {
-    event.preventDefault();
-
-    var highscores = this.$el.find(".score").map(function (_, score) {
-      return parseInt($(score).html());
-    }.bind(this));
+  View.prototype.updateHighScores = function(event) {
+    this.highscoreHandler.off();
 
     var $form = $(event.currentTarget).parent();
+    var $highscores = this.$el.find(".highscores");
     var sobriquet = $form.find(".sobriquet").val();
-    debugger;
+
+    // Look through the page's list of pre-seeded or updated high-scores.
+    $highscores.find("li").each(function (_, scoreEntry) {
+      if (parseInt($(scoreEntry).find(".score").html()) < this.board.score) {
+        // Update the first one worse than the player's score.
+        $(scoreEntry).find(".sobriquet").html("<strong>" + sobriquet + "</strong>");
+        $(scoreEntry).find(".score").html("<strong>" + this.board.score + "</strong>");
+        return false; // break out of the loop
+      }
+    }.bind(this));
+
+    // Then display the new scores and remove this form from the DOM.
+    this.$el.find(".highscore-entry").removeClass("active");
+    this.displayHighScores();
   };
 
   View.prototype.restart = function(event) {
-    if (event.keyCode !== 32) { return; } // ignore everything but Space
-    this.restartHandler.off();
+    if (event.keyCode === 32) {
+      this.restartHandler.off();
+      this.wipe(); // just for rendering purposes; start() makes a new Board
 
-    this.wipe(); // just for rendering purposes; start() makes a new Board
-
-    this.$el.find(".gameover").removeClass("active");
-    this.$el.find(".newgame").addClass("active");
-    this.newGameHandler = $(".newgame").on("click", ".difficulty", this.start.bind(this));
+      this.$el.find(".gameover").removeClass("active");
+      this.$el.find(".newgame").addClass("active");
+      this.newGameHandler = $(".newgame").on("click", ".difficulty", this.start.bind(this));
+    } else { // ignore everything but Space
+      return;
+    }
   };
 })();
