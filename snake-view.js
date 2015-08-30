@@ -124,8 +124,9 @@
     $highscores.find("li").each(function (_, scoreEntry) {
       if (parseInt($(scoreEntry).find(".score").html()) < this.board.score) {
         // Update the first one worse than the player's score.
-        $(scoreEntry).find(".sobriquet").html("<strong>" + sobriquet + "</strong>");
-        $(scoreEntry).find(".score").html("<strong>" + this.board.score + "</strong>");
+        $(scoreEntry).find(".sobriquet").html(sobriquet);
+        $(scoreEntry).find(".score").html(this.board.score);
+        $(scoreEntry).addClass("strong");
         return false; // break out of the loop
       }
     }.bind(this));
@@ -139,6 +140,9 @@
     if (event.keyCode === 32) {
       this.restartHandler.off();
       this.wipe(); // just for rendering purposes; start() makes a new Board
+
+      this.$el.find(".highscores li.strong").removeClass("strong");
+      this.$el.find(".highscores").removeClass("active");
 
       this.$el.find(".gameover").removeClass("active");
       this.$el.find(".newgame").addClass("active");

@@ -70,3 +70,7 @@
 .cell.dead {
   background-color: #254117;
 }
+
+.strong {
+  font-weight: bold;
+}
