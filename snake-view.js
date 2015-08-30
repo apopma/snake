@@ -90,9 +90,31 @@
     var $overlay = this.$el.find(".gameover").addClass("active");
     $overlay.find(".player-score").html(this.board.score);
 
+    var worstHighScore = parseInt($overlay.find(".score").last().html());
+    if (this.board.score > worstHighScore) { this.enterNewHighScore(); }
+
     window.clearInterval(this.timer);
     this.keyHandler.off();
     this.restartHandler = $(document).keydown(this.restart.bind(this));
+  };
+
+  View.prototype.enterNewHighScore = function() {
+    this.$el.find(".highscore-entry").addClass("active");
+    this.highscoreHandler = $(".highscore-entry").on(
+      "click", ".highscore-submit", this.updateHighscores.bind(this)
+    );
+  };
+
+  View.prototype.updateHighscores = function(event) {
+    event.preventDefault();
+
+    var highscores = this.$el.find(".score").map(function (_, score) {
+      return parseInt($(score).html());
+    }.bind(this));
+
+    var $form = $(event.currentTarget).parent();
+    var sobriquet = $form.find(".sobriquet").val();
+    debugger;
   };
 
   View.prototype.restart = function(event) {

@@ -7,7 +7,7 @@
   position: relative;
 }
 
-.newgame, .gameover {
+.newgame, .gameover, .highscore-entry, .highscores {
   display: none;
 }
 
@@ -20,6 +20,10 @@
   width: 100%;
   text-align: center;
   background-color: rgba(70, 70, 70, 0.4);
+}
+
+.highscore-entry.active {
+  display: block;
 }
 
 .newgame .info,
