@@ -30,6 +30,8 @@
       this.step();
     }.bind(this), speed);
 
+    this.startGameplayAudioLoop();
+
     this.newGameHandler.off();
     this.keyHandler = $(window).on("keydown", this.handleKeypress.bind(this));
   };
@@ -88,8 +90,15 @@
   };
 
   View.prototype.gameover = function() {
+    $(".loop").each(function (_, clip) {
+      clip.pause();
+      clip.currentTime = 0;
+    });
+    document.getElementById('die').play();
+
     this.$cells.filter(".snake").addClass("dead").removeClass("snake");
     $(".current-score").removeClass("active");
+
     var $overlay = this.$el.find(".gameover").addClass("active");
     $overlay.find(".player-score").html(this.board.score);
 
@@ -138,6 +147,27 @@
     this.$el.find(".highscore-entry").removeClass("active");
     this.displayHighScores();
   };
+
+  // ---------------------------------------------------------------------------
+
+  View.prototype.startGameplayAudioLoop = function() {
+    var $audio = $(".gameplay").children();
+    this.playRandomAudio($audio);
+    this.currentAudio.on("finishedPlaying", this.playRandomAudio($audio));
+  };
+
+  View.prototype.playRandomAudio = function(playlist) {
+    this.currentAudio = $(_.sample(playlist));
+    console.log(this.currentAudio.context.currentSrc);
+    this.currentAudio[0].play();
+
+    this.currentAudio.on("ended", function() {
+      console.log(this.currentAudio.context.currentSrc + " over!");
+      this.currentAudio.trigger("finishedPlaying");
+    }.bind(this));
+  };
+
+  // ---------------------------------------------------------------------------
 
   View.prototype.restart = function(event) {
     if (event.keyCode === 32) {
