@@ -101,16 +101,28 @@
           <section id='board'></section>
         </main>
 
-        <aside class="current-score">
-          Score: <span></span>
+        <aside id='sidebar'>
+          <aside class="current-score">
+            Score: <span></span>
+          </aside>
         </aside>
       </div>
-
     </div>
+
+    <section class='audio'>
+      <audio src="./audio/snake_intro.mp3" id='intro'></audio>
+      <section class='gameplay'>
+        <audio src="./audio/snake_play1.mp3" class='loop'></audio>
+        <audio src="./audio/snake_play2.mp3" class='loop'></audio>
+        <audio src="./audio/snake_play3.mp3" class='loop'></audio>
+      </section>
+      <audio src="./audio/snake_die.mp3" id='die'></audio>
+    </section>
 
     <script type="text/javascript">
       $(function () {
         new SnakeGame.View();
+        document.getElementById('intro').play();
       });
     </script>
   </body>

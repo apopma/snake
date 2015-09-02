@@ -5,11 +5,20 @@
   display: inline-block;
   box-sizing: border-box;
   overflow: hidden;
+  float: left;
 }
 
 .snakegame-container {
-  margin: 10pc auto;
+  margin: auto auto;
   text-align: center;
+}
+
+#sidebar {
+  min-width: 250px;
+  height: 100%;
+  border: 1px solid black;
+  margin: 10px;
+  float: right;
 }
 
 .newgame, .gameover,
