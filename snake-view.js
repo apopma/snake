@@ -90,10 +90,9 @@
   };
 
   View.prototype.gameover = function() {
-    $(".loop").each(function (_, clip) {
-      clip.pause();
-      clip.currentTime = 0;
-    });
+    $("#loop").prop('loop', false);
+    document.getElementById('loop').pause();
+    document.getElementById('loop').currentTime = 0;
     document.getElementById('die').play();
 
     this.$cells.filter(".snake").addClass("dead").removeClass("snake");
@@ -151,21 +150,22 @@
   // ---------------------------------------------------------------------------
 
   View.prototype.startGameplayAudioLoop = function() {
-    var $audio = $(".gameplay").children();
-    this.playRandomAudio($audio);
-    this.currentAudio.on("finishedPlaying", this.playRandomAudio($audio));
+    $("#loop").prop("loop", true);
+    document.getElementById('loop').play();
   };
 
-  View.prototype.playRandomAudio = function(playlist) {
-    this.currentAudio = $(_.sample(playlist));
-    console.log(this.currentAudio.context.currentSrc);
-    this.currentAudio[0].play();
-
-    this.currentAudio.on("ended", function() {
-      console.log(this.currentAudio.context.currentSrc + " over!");
-      this.currentAudio.trigger("finishedPlaying");
-    }.bind(this));
-  };
+  // View.prototype.playRandomAudio = function(playlist) {
+  //   this.currentAudio = $(_.sample(playlist));
+  //   console.log(this.currentAudio.context.currentSrc + " playing!");
+  //   this.currentAudio[0].play();
+  //
+  //   this.currentAudio.on("ended", function() {
+  //     console.log(this.currentAudio.context.currentSrc + " over!");
+  //     this.currentAudio[0].pause();
+  //     this.currentAudio[0].currentTime = 0;
+  //     // this.currentAudio.off();
+  //   }.bind(this));
+  // };
 
   // ---------------------------------------------------------------------------
 
