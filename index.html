@@ -14,7 +14,7 @@
   <body>
     <div class='container'>
       <div class="snakegame-container">
-        <h1>Snake!</h1>
+        <h1 class='title'>Snake!</h1>
         <main id='snakegame'>
           <section class='newgame active'>
             <div class="info">
@@ -110,7 +110,8 @@
     </div>
 
     <section class='audio'>
-      <audio src="./audio/snake_intro.mp3" id='intro'></audio>
+      <audio src="./audio/snake_intro1.mp3" class='intro' id='intro1'></audio>
+      <audio src="./audio/snake_intro2.mp3" class='intro' id='intro2'></audio>
       <audio src="./audio/snake_loop.mp3"  id='loop'></audio>
       <audio src="./audio/snake_die.mp3"   id='die'></audio>
     </section>
@@ -118,7 +119,15 @@
     <script type="text/javascript">
       $(function () {
         new SnakeGame.View();
-        document.getElementById('intro').play();
+
+        $(".title").addClass("fadein");
+        document.getElementById('intro1').play();
+
+        $(".title").one("animationend", function() {
+          $("#snakegame").addClass("fadein");
+          $("#sidebar").addClass("fadein");
+          document.getElementById('intro2').play();
+        });
       });
     </script>
   </body>

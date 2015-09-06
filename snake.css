@@ -6,6 +6,7 @@
   box-sizing: border-box;
   overflow: hidden;
   float: left;
+  opacity: 0;
 }
 
 .snakegame-container {
@@ -19,6 +20,7 @@
   border: 1px solid black;
   margin: 10px;
   float: right;
+  opacity: 0;
 }
 
 .newgame, .gameover,
@@ -99,4 +101,30 @@
 
 .strong {
   font-weight: bold;
+}
+
+.fadein {
+  opacity: 0;
+  animation: fadeIn ease-in 1;
+  animation-fill-mode: forwards;
+  animation-duration: 1s;
+}
+
+.title .fadein {
+  animation-duration: 0.8s;
+}
+
+#snakegame.fadein,
+#sidebar.fadein {
+  animation-delay: 0.5s;
+  animation-duration: 1.5s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

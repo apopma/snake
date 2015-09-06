@@ -30,6 +30,7 @@
       this.step();
     }.bind(this), speed);
 
+    $(".intro").each(function (_, clip) { clip.pause(); });
     this.startGameplayAudioLoop();
 
     this.newGameHandler.off();
