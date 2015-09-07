@@ -23,16 +23,6 @@ html {
   text-align: center;
 }
 
-#sidebar {
-  min-width: 250px;
-  height: 505px;
-  margin-top: 0px !important;
-  border: 1px solid black;
-  margin: 10px;
-  float: right;
-  opacity: 0;
-}
-
 .newgame, .gameover,
 .highscore-entry, .highscores,
 .current-score {
@@ -48,6 +38,17 @@ html {
   width: 100%;
   text-align: center;
   background-color: rgba(70, 70, 70, 0.4);
+}
+
+.how-to-play {
+  font-weight: 400;
+}
+
+.difficulty {
+  border-radius: 5px;
+  padding: 15px 30px;
+  margin: 0px 15px;
+  font-size: 16px;
 }
 
 .current-score.active,
@@ -74,8 +75,8 @@ html {
 
 .gameover .info {
   margin-top: 16%;
-  transform: translateX(34.7%);
-  width: 55%;
+  transform: translateX(21.3%);
+  width: 66%;
 }
 
 .container {
@@ -100,7 +101,6 @@ html {
   width: 20px;
   height: 20px;
   background-color: white;
-  border: 1px solid darkgray;
 }
 
 .cell.snake {
@@ -113,6 +113,11 @@ html {
 
 .cell.dead {
   background-color: #254117;
+}
+
+.snake, .dead, .apple {
+  border-radius: 5px;
+  border: 1px solid white;
 }
 
 .strong {
@@ -130,10 +135,14 @@ html {
   animation-duration: 0.8s;
 }
 
-#snakegame.fadein,
-#sidebar.fadein {
+#snakegame.fadein {
   animation-delay: 0.5s;
   animation-duration: 1.5s;
+}
+
+.gameover.fadein {
+  animation-delay: .75s;
+  animation-duration: 0.75s;
 }
 
 @keyframes fadeIn {
