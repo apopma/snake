@@ -1,3 +1,12 @@
+html {
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
+}
+
+.display {
+  position: relative;
+}
+
 #snakegame {
   position: relative;
   border: 3px solid black;
@@ -16,7 +25,8 @@
 
 #sidebar {
   min-width: 250px;
-  height: 100%;
+  height: 505px;
+  margin-top: 0px !important;
   border: 1px solid black;
   margin: 10px;
   float: right;
@@ -44,6 +54,12 @@
 .highscores.active,
 .highscore-entry.active {
   display: block;
+}
+
+.current-score.active {
+  position: absolute;
+  right: 5%;
+  margin-top: -20px;
 }
 
 .newgame .info,

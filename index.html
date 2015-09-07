@@ -8,13 +8,21 @@
     <script src='./vendor/underscore.js'></script>
     <script type="text/javascript" src='./snake.js'></script>
     <script type="text/javascript" src='./snake-view.js'></script>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:300,100' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="./snake.css" />
     <link rel="icon" type="image/png" href="./favicon.ico" />
   </head>
   <body>
     <div class='container'>
       <div class="snakegame-container">
-        <h1 class='title'>Snake!</h1>
+        <div class="display">
+          <h1 class='title'>Snake!</h1>
+          <div class="current-score">
+            <span></span>
+          </div>
+        </div>
+
         <main id='snakegame'>
           <section class='newgame active'>
             <div class="info">
@@ -101,11 +109,9 @@
           <section id='board'></section>
         </main>
 
-        <aside id='sidebar'>
-          <aside class="current-score">
-            Score: <span></span>
-          </aside>
-        </aside>
+        <!-- <aside id='sidebar'>
+
+        </aside> -->
       </div>
     </div>
 
