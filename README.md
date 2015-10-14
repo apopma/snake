@@ -1,5 +1,5 @@
 # [Snake!](http://apopma.github.io/snake)
-A little JS game which is just writhing with potential. Uses jQuery to render its graphics and handle view logic, and a few Underscore methods to make the core game code cleaner.
+This fun JS game uses jQuery to render its graphics and handle view logic, and a few Underscore methods to make the core game code cleaner.
 
 ## How to Play
 Move about with the arrow keys, and eat apples for points. A higher difficulty will give you more points per apple. How high a score can you get before you hit something? Strive to beat the top scorers!
